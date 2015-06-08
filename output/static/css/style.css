@@ -131,7 +131,7 @@ pre code {
     line-height: 1.5em;
     margin: 1.5em auto 3em auto;
     padding: 1.5em 2em;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     box-shadow: 2px 2px 8px #aaa;
     -webkit-box-shadow: 2px 2px 8px #aaa;
     -moz-box-shadow: 2px 2px 8px #aaa;

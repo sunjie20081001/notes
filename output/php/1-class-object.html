@@ -3,7 +3,7 @@
     <head>
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
-        <title>常用链接 - </title>
+        <title>php笔记 - </title>
         <meta name="keywords" content=""/>
         <meta name="description" content=""/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -13,10 +13,10 @@
         <div id="container">
             
 <div id="header">
-  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#php">php</a>&nbsp;»&nbsp;常用链接</div>
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#php">php</a>&nbsp;»&nbsp;php笔记</div>
 </div>
 <div class="clearfix"></div>
-<div id="title">常用链接</div>
+<div id="title">php笔记</div>
   <div id="content">
   <h3 id="_1">类与对象</h3>
 <h4 id="_2">简介</h4>
@@ -24,6 +24,69 @@
 <p>php5新特性:　访问控制　抽象类　final类与方法<br />
 附加的　:　魔术方法，接口，对象复制，　类型约束 <br />
 变量对象只持有对象的引用.(非拷贝）</p>
+</blockquote>
+<h4 id="_3">基本概念</h4>
+<h5 id="class">class  类名</h5>
+<div class="hlcode"><pre>   <span class="n">class</span> <span class="n">ClassName</span><span class="p">{</span>
+        <span class="c1">// 属性</span>
+         <span class="c1">// 方法</span>
+   <span class="p">}</span>
+</pre></div>
+
+
+<blockquote>
+<p>注:  <br />
+1. 类名:(ClassName) 非保留字. 字母或者下划线开头,后面跟着若干字母数字或者下划线.<br />
+     正则表达式: [a-zA-Z_\x7f-\x7ff][a-zA-Z_\x7f-\x7ff]*<br />
+2. 类中包含: 常量,变量(属性),函数(方法)<br />
+3. $this 伪变量: 主叫对象的引用,通常该方法所从属的对象,(用于类定义内部调用, 第二个对象静态调用时
+   ,也可能是另外一个对象) <br />
+   $this 只会在 实例化的对象中才会赋值;
+       例: class A{
+            function foo(){
+                    if(isset($this)){
+                         echo get_class($this);
+                       }else{
+                         echo "未定义";
+                    }
+                  }
+            }
+            class B{
+                function bar(){
+                    A::foo();
+                }
+            }
+            $a = new A(); $a-&gt;foo(); // A 
+            A::foo();                           // $this 未定义
+            $b = new B(); $b-&gt;bar(); //B $this 是B
+            B::foo();                           // $his 未定义
+            E_STRICT : enable 会报错,无static 方法;</p>
+</blockquote>
+<h5 id="new">new 创建实例</h5>
+<p>实例化一个对象的关键字.</p>
+<blockquote>
+<p>注:<br />
+1. 实例化一个对象的时候,总是被赋值,除非对象定义了构造函数,且抛出一个错误.
+2. 类应该在实例化之前定义.(某些情况必须)
+3. new 后面包含一个类名的字符串,这个类就会呗实例化.
+4. 类属于一个名字的空间, 必需使用完整名称.
+5. php5.3 引进两个新方法创建一个对象实例:
+     return new static;  new (实例对象)</p>
+</blockquote>
+<h5 id="extends">extends 类继承</h5>
+<p>继承另一个类的方法和属性.</p>
+<blockquote>
+<ol>
+<li>php  不支持多重继承,一个类只有一个基类</li>
+<li>覆盖(重载): 父类的方法和属性,可以被重新声明.可以通过parent::访问父类的方法及属性.
+  但是父类的方法使用了final 关键字,方法不可重载.</li>
+<li>重载方法,参数必需保持一致.否则,出现 E_STRICT级别错误.构造函数可以使用不同的参数.</li>
+</ol>
+</blockquote>
+<h5 id="class_1">::class 类名解析</h5>
+<blockquote>
+<p>php5.5 关键词class 也可用于类名的解析.<br />
+ClassName::class 获取类的完全限定名称. (包括命名空间)</p>
 </blockquote>
 </div>
 

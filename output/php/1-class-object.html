@@ -19,13 +19,13 @@
 <div id="title">php笔记</div>
   <div id="content">
   <h3 id="_1">类与对象</h3>
-<h4 id="_2">简介</h4>
+<h4 id="_2">一 .简介</h4>
 <blockquote>
 <p>php5新特性:　访问控制　抽象类　final类与方法<br />
 附加的　:　魔术方法，接口，对象复制，　类型约束 <br />
 变量对象只持有对象的引用.(非拷贝）</p>
 </blockquote>
-<h4 id="_3">基本概念</h4>
+<h4 id="_3">二 . 基本概念</h4>
 <h5 id="class">class  类名</h5>
 <div class="hlcode"><pre>   <span class="n">class</span> <span class="n">ClassName</span><span class="p">{</span>
         <span class="c1">// 属性</span>
@@ -41,36 +41,39 @@
 2. 类中包含: 常量,变量(属性),函数(方法)<br />
 3. $this 伪变量: 主叫对象的引用,通常该方法所从属的对象,(用于类定义内部调用, 第二个对象静态调用时
    ,也可能是另外一个对象) <br />
-   $this 只会在 实例化的对象中才会赋值;
-       例: class A{
-            function foo(){
-                    if(isset($this)){
-                         echo get_class($this);
-                       }else{
-                         echo "未定义";
-                    }
-                  }
-            }
-            class B{
-                function bar(){
-                    A::foo();
-                }
-            }
-            $a = new A(); $a-&gt;foo(); // A 
-            A::foo();                           // $this 未定义
-            $b = new B(); $b-&gt;bar(); //B $this 是B
-            B::foo();                           // $his 未定义
-            E_STRICT : enable 会报错,无static 方法;</p>
+   $this 只会在 实例化的对象中才会赋值;</p>
 </blockquote>
+<div class="hlcode"><pre>   <span class="err">例</span><span class="o">:</span> <span class="kr">class</span> <span class="nx">A</span><span class="p">{</span>
+        <span class="kd">function</span> <span class="nx">foo</span><span class="p">(){</span>
+                <span class="k">if</span><span class="p">(</span><span class="nx">isset</span><span class="p">(</span><span class="nx">$this</span><span class="p">)){</span>
+                     <span class="nx">echo</span> <span class="nx">get_class</span><span class="p">(</span><span class="nx">$this</span><span class="p">);</span>
+                   <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                     <span class="nx">echo</span> <span class="s2">&quot;未定义&quot;</span><span class="p">;</span>
+                <span class="p">}</span>
+              <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="kr">class</span> <span class="nx">B</span><span class="p">{</span>
+            <span class="kd">function</span> <span class="nx">bar</span><span class="p">(){</span>
+                <span class="nx">A</span><span class="o">::</span><span class="nx">foo</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">$a</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">A</span><span class="p">();</span> <span class="nx">$a</span><span class="o">-&gt;</span><span class="nx">foo</span><span class="p">();</span> <span class="c1">// A </span>
+        <span class="nx">A</span><span class="o">::</span><span class="nx">foo</span><span class="p">();</span>                           <span class="c1">// $this 未定义</span>
+        <span class="nx">$b</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">B</span><span class="p">();</span> <span class="nx">$b</span><span class="o">-&gt;</span><span class="nx">bar</span><span class="p">();</span> <span class="c1">//B $this 是B</span>
+        <span class="nx">B</span><span class="o">::</span><span class="nx">foo</span><span class="p">();</span>                           <span class="c1">// $his 未定义</span>
+        <span class="nx">E_STRICT</span> <span class="o">:</span> <span class="nx">enable</span> <span class="err">会报错</span><span class="p">,</span><span class="err">无</span><span class="kr">static</span> <span class="err">方法</span><span class="p">;</span>
+</pre></div>
+
+
 <h5 id="new">new 创建实例</h5>
 <p>实例化一个对象的关键字.</p>
 <blockquote>
 <p>注:<br />
-1. 实例化一个对象的时候,总是被赋值,除非对象定义了构造函数,且抛出一个错误.
-2. 类应该在实例化之前定义.(某些情况必须)
-3. new 后面包含一个类名的字符串,这个类就会呗实例化.
-4. 类属于一个名字的空间, 必需使用完整名称.
-5. php5.3 引进两个新方法创建一个对象实例:
+1. 实例化一个对象的时候,总是被赋值,除非对象定义了构造函数,且抛出一个错误.<br />
+2. 类应该在实例化之前定义.(某些情况必须)<br />
+3. new 后面包含一个类名的字符串,这个类就会呗实例化.<br />
+4. 类属于一个名字的空间, 必需使用完整名称.<br />
+5. php5.3 引进两个新方法创建一个对象实例:<br />
      return new static;  new (实例对象)</p>
 </blockquote>
 <h5 id="extends">extends 类继承</h5>
@@ -87,6 +90,58 @@
 <blockquote>
 <p>php5.5 关键词class 也可用于类名的解析.<br />
 ClassName::class 获取类的完全限定名称. (包括命名空间)</p>
+</blockquote>
+<h4 id="_4">三.属性</h4>
+<p>类的变量成员,叫做属性.  </p>
+<blockquote>
+<ol>
+<li>属性声明关键字: public protected private 然后 普通变量</li>
+<li>初始化属性,必需是常数(php脚本编译阶段就可以得到其值.,而不依赖运行时,才能求值.</li>
+<li>var 关键字,如果没有 public protected private ,默认 public</li>
+<li>-&gt; 对象运算符,调用非静态属性 $this-&gt;property, ::(双冒号) 访问静态属性,self::property</li>
+<li>nowdoc 可以在任何静态数据上下文中使用,包括属性声明(php5.3.0)</li>
+</ol>
+</blockquote>
+<h4 id="_5">四. 类常量</h4>
+<p>类中始终不变的值定义为常量.</p>
+<blockquote>
+<ol>
+<li>不使用$为前缀.</li>
+<li>必须为定值,不能 是 变量,类属性,属性运算的结果,函数调用.</li>
+<li>接口(interface)也可以定义常量.</li>
+<li>php5.3 可以用一个变量来动态调用类,但是变量值 不能是 关键字.</li>
+</ol>
+</blockquote>
+<h4 id="_autoload-spl_autoload_register">五. 自动加载类 _autoload( spl_autoload_register())代替.</h4>
+<h4 id="_6">六. 构造函数, 析构函数</h4>
+<h5 id="__construct">构造函数 __construct()</h5>
+<blockquote>
+<ol>
+<li>定义类的时候可以定义构造函数,创建类实例的时候,构造函数会被调用(适合初始化数据)</li>
+<li>子类定义了构造函数,可以参数与父类不同,调用父类构造函数要:parent::__construct();</li>
+<li>子类的构造函数没定义，会继承父类的（非private)  </li>
+</ol>
+</blockquote>
+<h5 id="_7">析构函数</h5>
+<p>析构函数是在对象的所有的引用都被删除，后者显示的销毁对象时调用．</p>
+<blockquote>
+<ol>
+<li>子类的析构函数调用父类的parent::__destruct();</li>
+<li>子类的没有，继承父类的析构函数．</li>
+<li>exit() 终止也会调用析构函数．　析构函数中调用exit() 会终止其余关闭操作．</li>
+<li>析构函数抛出异常，会产生致命错误．</li>
+</ol>
+</blockquote>
+<h4 id="_8">七. 访问可见性</h4>
+<p>类的属性／方法的可见性由：public protected private  </p>
+<blockquote>
+<ol>
+<li>public 任何地方可访问</li>
+<li>protected 子类和自身中可访问</li>
+<li>private 只有自身可访问．</li>
+<li>同一类的不同实例中也可以互相访问私有成员和受保护成员．（具体实现已知）</li>
+<li>方法默认是public 属性由var 定义是　public</li>
+</ol>
 </blockquote>
 </div>
 

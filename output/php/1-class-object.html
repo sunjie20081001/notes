@@ -143,6 +143,103 @@ ClassName::class 获取类的完全限定名称. (包括命名空间)</p>
 <li>方法默认是public 属性由var 定义是　public</li>
 </ol>
 </blockquote>
+<h4 id="_9">八.对象继承</h4>
+<p>注: 除非自动加载，否这一个类被定义之前，父类必须在子类之前被声明．（包括类继承，与接口）</p>
+<h4 id="_10">九.范围解析操作符(::)</h4>
+<blockquote>
+<ol>
+<li>类外部访问静态方法／属性　需要使用类名．可以使用值为类名的变量（不能是关键字，如self static parent)</li>
+<li>类的内部访问静态方法／属性，使用　self static parent(parent 父类方法／属性）</li>
+</ol>
+</blockquote>
+<h4 id="static">十.Static (静态）关键字</h4>
+<p>static 用于：定义　类的静态方法和属性．　定义静态变量与后期静态绑定．</p>
+<blockquote>
+<ol>
+<li>声明为静态的属性和方法，可以不用实例化对象访问．</li>
+<li>静态属性不能被已实例化的对象访问，静态方法可以．</li>
+<li>-&gt;对象运算符不能调用静态属性.</li>
+<li>$this伪变量不能在静态方法中使用,因为静态方法不需要实例化对象.</li>
+<li>静态方式调用非静态方法会导致E_STRICT级别的错误.</li>
+<li>就像其它所有的 php静态变量一样,静态属性只能呗初始化文字或者常量,不能使用表达式.用 整数/数组初始化,不能用变量或者返回值,也不能用一个对象.</li>
+</ol>
+</blockquote>
+<h4 id="_11">十一.抽象类</h4>
+<h5 id="1">1.  定义</h5>
+<div class="hlcode"><pre>  <span class="kr">abstract</span> <span class="kr">class</span> <span class="nx">Abstract</span><span class="p">{</span>
+       <span class="kr">abstract</span> <span class="kr">protected</span> <span class="kd">function</span> <span class="nx">abMethod</span><span class="p">(){</span>
+
+       <span class="p">}</span>
+  <span class="p">}</span>
+</pre></div>
+
+
+<p>php5支持抽象类和抽象方法.任何一个类,如果它里面至少有一个方法是被声明为抽象的,那么这个类就必须被声明为抽象的.</p>
+<h5 id="2">2. 注意事项</h5>
+<blockquote>
+<ol>
+<li>被声明为抽象的方法,只是声明了其调用方式（参数），没有具体的功能实现．　</li>
+<li>继承一个抽象类，子类必须定义父类的所有的抽象方法．</li>
+<li>子类的方法的访问控制必须与父类一致（或者更宽松）</li>
+<li>子类的调用方式，类型／所需参数数量必须一致．（若子类中定义了可选参数，父类中没有，也可以）</li>
+</ol>
+</blockquote>
+<h4 id="interface">十二 . 对象接口（interface）</h4>
+<h5 id="1_1">1. 定义</h5>
+<p>可以指定类必须实现哪些方法，不需要指定方法的具体内容．</p>
+<h5 id="2-interface">2. 关键字　interface</h5>
+<p>使用　interface 关键字来定义接口，接口定义的方法必须为公有．</p>
+<h5 id="3-implements">3. 实现接口　(implements)</h5>
+<ol>
+<li>使用操作符：　implements </li>
+<li>类中必须实现接口的所有的方法，否则报致命错误．</li>
+<li>类可以实现多个接口，用　,  来隔开．<blockquote>
+<p>注： <br />
+1. 实现多个接口，接口中的方法不能重名．<br />
+2. 接口也可以继承，使用　extends<br />
+3. 类实现接口，必须使用和接口中定义的方法完全一致的方式，否则会导致致命错误． </p>
+</blockquote>
+</li>
+<li>接口常量,  类常量使用完全相同，但是不能被资料或者子接口覆盖．</li>
+</ol>
+<h4 id="_12">十三 重载</h4>
+<ol>
+<li>
+<p>定义
+php所提供的重载(overloading)是指动态的创建类属性和方法．我们通过魔术方法来实现．  <br />
+当调用当前环境下未定义的或不可见的属性／方法时，重载就会呗调用．（不可访问属性，不可访问方法）  </p>
+<blockquote>
+<p>注<br />
+1. 所有重载的方法必须声明为public <br />
+2. 这些魔术方法的参数都不恩给你通过引用传递．<br />
+3. php重载与绝大多数语言不同．传统的重载是用于提供多个同名的类方法，但是各个方法的参数类型和个数不同．</p>
+</blockquote>
+</li>
+<li>
+<p>属性重载</p>
+<ol>
+<li>public void __set(string $name, mixed $value) //在不可访问的属性赋值的时候，调用</li>
+<li>public mixed __get(string $name)  //读取不可访问属性的时候</li>
+<li>public bool __isset(string $name)  // 当对不可访问属性调用 isset()或者empty()  __isset() 会被调用</li>
+<li>public void __unset(string $name) //  当对不可访问属性调用　unset()   时，　__unset()  会<blockquote>
+<p>注：<br />
+1. 属性重载只能在对象中进行．静态方法中，这些魔术方法不会被调用．所以这些方法不能被声明为static  <br />
+2. php处理赋值运算的方式，__set()  的返回值将被忽略．　__get()   也不会调用<br />
+       $a = $obj-&gt;b = 8;<br />
+3. 在除 isset() 外的其它语言结构中无法使用重载的属性，这意味着当对一个重载的属性使用 empty() 时，重载魔术方法将不会被调用。
+   为避开此限制，必须将重载属性赋值到本地变量再使用 empty()。(没明白！！！！！)  </p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li>方法重载  <br />
+       public mixed __call(string $name, array $arguments)  //在对象中调用一个不可访问的方法时，__call 　会被调用．
+       public static mixed __callStatic(string $name, array $arguments) 静态方式调用一个不可访问的方法</li>
+</ol>
+<h4 id="_13">十四　对象遍历</h4>
+<h5 id="1_2">1.  定义</h5>
+<p>foreach  默认遍历所有可见属性．</p>
+<h5 id="2-iterator-iteratoraggregategetiterator-iterator">2.  实现Iterator  接口，可以决定对象如何遍历，遍历哪些值．也可以使用　IteratorAggregate::getIterator() 返回一个Iterator的类实例.</h5>
 </div>
 
         </div>
